@@ -1,6 +1,7 @@
 package com.banktransaction.service;
 
 import com.banktransaction.domain.Transaction;
+import com.banktransaction.helper.TimestampHelper;
 import com.banktransaction.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,13 +15,12 @@ public class TransactionService {
 
     @Autowired
     TransactionRepository transactionRepository;
-
-    @Value("${bancktransaction.time-limit-seconds}")
-    long timeLimitInSeconds;
+    @Autowired
+    TimestampHelper timestampHelper;
 
     public Transaction save(Transaction transaction) {
         long currentTime = new Date().getTime();
-        long timestampLimit = currentTime-(1000*this.timeLimitInSeconds);
+        long timestampLimit = timestampHelper.getLimitStartTimestamp();
 
         if(transaction.getTimestamp() >= timestampLimit)
             return transactionRepository.save(transaction);

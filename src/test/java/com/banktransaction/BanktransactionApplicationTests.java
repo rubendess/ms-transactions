@@ -1,6 +1,7 @@
 package com.banktransaction;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,28 +32,38 @@ public class BanktransactionApplicationTests {
         return new HttpEntity(body, headers);
     }
 
-    private ResponseEntity insertTransaction(double amount, long timestamp) {
+	public void deleteAllTransactions() {
+        // Removing all transactions
+        rest.delete("/transactions");
+    }
+
+    public ResponseEntity insertTransaction(double amount, long timestamp) {
         Map body = new HashMap();
         body.put("amount", amount);
         body.put("timestamp", timestamp);
         return rest.postForEntity("/transactions", this.getEntityForSend(body), String.class);
     }
 
+    @After
+    public void deleteAllTest() {
+        this.deleteAllTransactions();
+    }
+
     @Test
-    public void insertTransactionInAcceptableTime() {
+    public void insertTransactionInAcceptableTimeTest() {
         ResponseEntity res = this.insertTransaction(50, new Date().getTime());
         assertTrue(res.getStatusCode().equals(HttpStatus.CREATED));
     }
 
     @Test
-    public void insertTransactionInNotAcceptableTime() {
+    public void insertTransactionInNotAcceptableTimeTest() {
         // Try insert transaction older than 60 seconds
         ResponseEntity res = this.insertTransaction(50, new Date().getTime()-(61000));
         assertTrue(res.getStatusCode().equals(HttpStatus.NO_CONTENT));
     }
 
 	@Test
-    public void saveManyTransactions() {
+    public void saveManyTransactionsTest() {
         int totalToInsert = 60;
         int totalInserted = 0;
 	    for (int i = 0; i < totalToInsert; i++) {
