@@ -20,7 +20,7 @@ public class StatisticsController {
 
     @GetMapping
     public ResponseEntity<?> getStatistics() {
-        StatisticsVO statisticsVO = statisticsService.getStatistics();
+        StatisticsVO statisticsVO = statisticsService.getStatisticsStartingByTimeLimit();
         return ResponseEntity.status(HttpStatus.OK).body(statisticsVO);
     }
 

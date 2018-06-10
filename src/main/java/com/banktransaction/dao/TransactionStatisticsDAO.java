@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
+import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 
 @Repository
 public class TransactionStatisticsDAO {
@@ -47,9 +48,9 @@ public class TransactionStatisticsDAO {
         return objectMapper.convertValue(statisticsMap, StatisticsVO.class);
     }
 
-    public StatisticsVO getStatistics(long inititalTimestamp) {
+    public StatisticsVO getStatisticsStartingByTimeLimit(long inititalTimestamp) {
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
-//                .withQuery(matchQuery("timestamp", inititalTimestamp))
+                .withQuery(rangeQuery("timestamp").gte(inititalTimestamp))
                 .addAggregation(
                         AggregationBuilders.sum("sum")
                                 .field("amount")

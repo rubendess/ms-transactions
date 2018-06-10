@@ -30,11 +30,13 @@ public class BankstatisticsApplicationTests extends BanktransactionApplicationTe
         insertTransaction(10.5, timestamp);
         insertTransaction(4.5, timestamp);
         insertTransaction(6, timestamp);
+        // Will not be included
+        insertTransaction(26, timestamp-(1000*61));
 
-        ResponseEntity res = this.getStatisticsFromAPI();
-        if(!res.getStatusCode().equals(HttpStatus.OK)) assertTrue(false);
+        ResponseEntity resStatistics = this.getStatisticsFromAPI();
+        if(!resStatistics.getStatusCode().equals(HttpStatus.OK)) assertTrue(false);
 
-        StatisticsVO statisticsVO = objectMapper.convertValue(res.getBody(), StatisticsVO.class);
+        StatisticsVO statisticsVO = objectMapper.convertValue(resStatistics.getBody(), StatisticsVO.class);
 
         // Checking if the results are correct
         assertTrue(statisticsVO.getAvg() == 7
