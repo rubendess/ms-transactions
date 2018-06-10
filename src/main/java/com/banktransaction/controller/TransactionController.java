@@ -22,20 +22,7 @@ public class TransactionController {
     public ResponseEntity<?> insertTransaction(@RequestBody Transaction transaction) {
         Transaction result = transactionService.save(transaction);
 
-        if(result != null)
-            return ResponseEntity.status(HttpStatus.CREATED).body(transaction);
-
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    @GetMapping
-    public List getAll() {
-        return transactionService.findAll();
-    }
-
-    @GetMapping("/time")
-    public List getTransactionById() {
-        return transactionService.findByTimestampBeforeTime(new Date().getTime(), 60);
+        return ResponseEntity.status(result != null ? HttpStatus.CREATED : HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping
