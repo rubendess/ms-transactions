@@ -28,6 +28,12 @@ Variables
 Run
 -------------
 
+> - **Prerequisite-1**: Install Java 8
+> - **Prerequisite-2**: Install Gradle
+> - **Prerequisite-3 (using local Elasticsearch)**: Install Elasticsearch 6.2.4
+> - **Prerequisite-4 (using local Elasticsearch)**: Configure ElasticSearch Cluster (set cluster name and others)
+> - **Prerequisite-5 (using local Elasticsearch)**: Start Elasticsearch Instance
+
 #### Local
 
 To Run this project in Local environment, execute the following command: **gradle bootRun**
