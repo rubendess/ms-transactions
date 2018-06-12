@@ -53,7 +53,7 @@ REST API
 ##### Health
 > http://localhost:6060/actuator/health
 
-#####1. Every Time a new transaction happened, this endpoint will be called
+##### 1. Every Time a new transaction happened, this endpoint will be called
 
 > - POST /transactions
 
@@ -107,5 +107,4 @@ Where:
 
 > curl -X GET 
   http://**localhost:6060**/statistics 
-  -H 'cache-control: no-cache' 
-  -H 'postman-token: 2c2a8658-a07f-75d5-8e36-6c2b08b0764c'
+  -H 'cache-control: no-cache'
